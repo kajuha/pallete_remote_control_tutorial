@@ -1,0 +1,25 @@
+<launch>
+    <arg name="slam_method" default="gmapping" doc="slam type [gmapping, cartographer]"/>
+    <arg name="configuration_basename" default="agv.lua"/>
+    <arg name="open_rviz" default="true"/>
+    <arg name="bags_directory" default="$(find agv_slam)/bags"/>
+    <arg name="bagfile_name" default="test.bag"/>  
+
+    <param name="use_sim_time" value="true"/>
+
+    <!-- Replay bagfile -->
+    <node pkg="rosbag" type="play" name="replay"
+          args="$(arg bags_directory)/$(arg bagfile_name)"/>
+
+    <!-- SLAM -->
+    <include file="$(find agv_slam)/launch/$(arg slam_method).launch">
+        <arg name="configuration_basename" value="$(arg configuration_basename)"/>
+    </include>
+
+    <!-- rviz -->
+    <group if="$(arg open_rviz)">
+        <node pkg="rviz" type="rviz" name="rviz" required="true"
+              args="-d $(find agv_slam)/rviz/$(arg slam_method).rviz"/>
+    </group>    
+
+</launch>

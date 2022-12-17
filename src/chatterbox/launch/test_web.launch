@@ -1,0 +1,12 @@
+<launch>
+	<include file="$(find chatterbox)/launch/base_web.launch">
+    	<arg name="message_display" value="log"/>
+    	<!-- <arg name="message_display" value="screen"/> -->
+	</include>
+
+	<include file="$(find chatterbox)/launch/server_web.launch">
+    	<!-- <arg name="message_display" value="log"/> -->
+    	<arg name="message_display" value="screen"/>
+    	<arg name="user_name" value="$(env USER)"/>
+	</include>
+</launch>

@@ -1,0 +1,9 @@
+<launch>
+  <arg name="message_display" default="screen" doc="output type"/>
+  <arg name="bms_model" default="dummy"  doc="bms_model"/>
+
+  <node pkg="battery" type="dummy_battery" name="battery" output="$(arg message_display)">
+    <param name="message_display" value="$(arg message_display)"/>
+    <param name="bms_model" value="$(arg bms_model)"/>
+  </node>
+</launch>

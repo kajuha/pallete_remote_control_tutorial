@@ -1,0 +1,40 @@
+<launch>
+<!-- holonomic AMR test -->
+    
+    <!-- Arguments -->
+    <arg name="open_rviz" default="true"/>
+    <arg name="odom_type" default="omni"/>
+    
+    <!-- AMCL -->
+    <include file="$(find agv_navigation)/launch/amcl.launch">
+        <arg name="odom_model_type" value="omni"/>
+    </include>
+  
+    <!-- move_base -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+      <param name="base_local_planner"    value="teb_local_planner/TebLocalPlannerROS"/>
+      <param name="controller_frequency"  value="10.0"/>
+      <param name="controller_patience"   value="15.0"/>
+
+      <rosparam file="$(find agv_navigation)/teb_param/costmap_common_params.yaml"                      command="load" ns="global_costmap"/>
+      <rosparam file="$(find agv_navigation)/teb_param/costmap_common_params.yaml"                      command="load" ns="local_costmap"/>
+      <rosparam file="$(find agv_navigation)/teb_param/local_costmap_params.yaml"                       command="load"/>
+      <rosparam file="$(find agv_navigation)/teb_param/global_costmap_params.yaml"                      command="load"/>
+      <rosparam file="$(find agv_navigation)/teb_param/base_local_planner_params_$(arg odom_type).yaml" command="load"/>
+
+      <param name="base_global_planner" value="global_planner/GlobalPlanner"/>
+      <param name="planner_frequency"   value="5.0"/>
+      <param name="planner_patience"    value="15.0"/>
+
+      <param name="enable_homotopy_class_planning"  value="false"/>
+      <param name="neutral_cost"                    value="66"/>
+      <param name="cost_factor"                     value="0.55"/>
+    </node>
+  
+    <!-- rviz -->
+    <group if="$(arg open_rviz)"> 
+      <node pkg="rviz" type="rviz" name="rviz" required="true"
+            args="-d $(find agv_navigation)/rviz/agv.rviz"/>
+    </group>
+  </launch>
+  

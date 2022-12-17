@@ -1,0 +1,43 @@
+<launch>
+    <arg name="world"           default="$(find agv_simulation)/worlds/simple_world.world"/>
+    <arg name="mapfile"         default="$(find agv_simulation)/maps/simple_world.yaml"/>
+    <arg name="urdf"            default="pallete_rev1.urdf"/>
+    <arg name="x_pos"           default="0.0"/>
+    <arg name="y_pos"           default="0.0"/>
+    <arg name="z_pos"           default="0.0"/>
+    <arg name="local_planner"   default="teb"/>
+    <arg name="odom_type"       default="diff"/> <!-- diff/omni -->
+    <arg name="open_rviz"       default="true"/>
+    <arg name="gui"             default="false"/>
+    <param name="use_sim_time" value="true"/>
+
+    <!-- Gazebo Simulation -->
+    <include file="$(find agv_simulation)/launch/gazebo.launch">
+        <arg name="world"   value="$(arg world)"/>
+        <arg name="x_pos"   value="$(arg x_pos)"/>
+        <arg name="y_pos"   value="$(arg y_pos)"/>
+        <arg name="z_pos"   value="$(arg z_pos)"/>
+        <arg name="urdf"    value="$(arg urdf)"/>
+        <arg name="gui"     value="$(arg gui)"/>
+    </include>
+
+    <!-- Navigation -->
+    <include file="$(find agv_navigation)/launch/navigation.launch">
+        <arg name="open_rviz"       value="$(arg open_rviz)"/>
+        <arg name="odom_type"       value="$(arg odom_type)"/>
+        <arg name="mapfile"         value="$(arg mapfile)"/>
+        <arg name="gazebo_disable"  value="false"/>
+    </include>
+    
+    <!-- LiDAR -->
+    <!-- <node pkg="ira_laser_tools" type="laserscan_multi_merger" name="laserscan_multi_merger">
+        <param name="destination_frame"         value="base_scan"/>
+        <param name="cloud_destination_topic"   value="/merged_cloud"/>
+        <param name="scan_destination_topic"    value="/merged_scan"/>
+        <param name="laserscan_topics"          value="/scan_1 /scan_2"/>
+        <param name="angle_min"                 value="-3.14159265359"/>
+        <param name="angle_max"                 value="3.14159265259"/>
+    </node>
+
+    <node pkg="set_time_laserscan" type="run.py" name="laser_scan_modifier" output="screen"/> -->
+</launch>

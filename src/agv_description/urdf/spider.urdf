@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot name="agv"> <!-- name changed -->
+  <material name="frame_color">
+    <color rgba="0.5 0.5 0.5 1" />
+  </material>
+    
+  <material name="wheel_color">
+    <color rgba="0.7 0.8 0.0 1" />
+  </material>
+
+  <material name="lidar_color">
+    <color rgba="0.1 0.1 0.1 1" />
+  </material>
+
+  <link name="base_footprint"/> <!-- root link added -->
+
+  <link name="base_link">
+    <inertial>
+      <origin
+        xyz="0.0 0.0 0.0"
+        rpy="0 0 0" />
+      <mass value="30.0414558570331" />
+      <inertia
+        ixx="0.523789441005773"
+        ixy="0.000606399487614046"
+        ixz="3.78282636659352E-06"
+        iyy="0.614587289833735"
+        iyz="2.22135177280669E-06"
+        izz="1.09112219495802" />
+    </inertial>
+
+    <visual name="visual">
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://agv_description/meshes/AGV_FRAME.STL" />
+      </geometry>
+      <material name="frame_color"/>
+    </visual>
+
+    <collision name="collision">
+      <origin
+        xyz="0 0 0.155"
+        rpy="0 0 0" />
+      <geometry>
+        <!-- <mesh filename="package://agv_description/meshes/AGV_FRAME.STL" /> -->
+        <box size="0.9 0.8 0.23"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="front_left_wheel">
+    <inertial>
+      <origin
+        xyz="3.4972E-07 -3.0069E-05 -1.0861E-07"
+        rpy="0 0 0" />
+      <mass value="1.9445" />
+      <inertia
+        ixx="0.0025998"
+        ixy="1.0152E-09"
+        ixz="4.9572E-09"
+        iyy="0.004103"
+        iyz="2.3451E-09"
+        izz="0.002596" />
+    </inertial>
+
+    <visual name="visual">
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://agv_description/meshes/WHEEL_FL.STL" />
+      </geometry>
+      <material name="wheel_color"/>
+    </visual>
+
+    <collision name="collision">
+      <origin
+        xyz="0 0 0"
+        rpy="1.5708 0 0" />
+      <geometry>
+        <!-- <mesh filename="package://agv_description/meshes/WHEEL_FL.STL" /> -->
+        <cylinder radius="0.1016" length="0.105"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="front_right_wheel">
+    <inertial>
+      <origin
+        xyz="3.9273E-07 3.0338E-05 -1.702E-08"
+        rpy="0 0 0" />
+      <mass value="1.9445" />
+      <inertia
+        ixx="0.0025996"
+        ixy="-2.1514E-10"
+        ixz="1.1288E-09"
+        iyy="0.0041027"
+        iyz="-3.7002E-10"
+        izz="0.0025958" />
+    </inertial>
+
+    <visual name="visual">
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://agv_description/meshes/WHEEL_FR.STL" />
+      </geometry>
+      <material name="wheel_color"/>
+    </visual>
+
+    <collision name="collision">
+      <origin
+        xyz="0 0 0"
+        rpy="1.5708 0 0" />
+      <geometry>
+        <!-- <mesh filename="package://agv_description/meshes/WHEEL_FR.STL" /> -->
+        <cylinder radius="0.1016" length="0.105"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="back_left_wheel">
+    <inertial>
+      <origin
+        xyz="3.9272E-07 3.0338E-05 -1.7043E-08"
+        rpy="0 0 0" />
+      <mass value="1.9445" />
+      <inertia
+        ixx="0.0025996"
+        ixy="-2.1534E-10"
+        ixz="1.1303E-09"
+        iyy="0.0041027"
+        iyz="-3.7031E-10"
+        izz="0.0025958" />
+    </inertial>
+
+    <visual name="visual">
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://agv_description/meshes/WHEEL_RL.STL" />
+      </geometry>
+      <material name="wheel_color"/>
+    </visual>
+
+    <collision name="collision">
+      <origin
+        xyz="0 0 0"
+        rpy="1.5708 0 0" />
+      <geometry>
+        <!-- <mesh filename="package://agv_description/meshes/WHEEL_RL.STL" /> -->
+        <cylinder radius="0.1016" length="0.105"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="back_right_wheel">
+    <inertial>
+      <origin
+        xyz="3.4972E-07 -3.0069E-05 -1.0861E-07"
+        rpy="0 0 0" />
+      <mass value="1.9445" />
+      <inertia
+        ixx="0.0025998"
+        ixy="9.0233E-10"
+        ixz="5.1138E-09"
+        iyy="0.004103"
+        iyz="2.7176E-09"
+        izz="0.002596" />
+    </inertial>
+
+    <visual name="visual">
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://agv_description/meshes/WHEEL_RR.STL" />
+      </geometry>
+      <material name="wheel_color"/>
+    </visual>
+
+    <collision name="collision">
+      <origin
+        xyz="0 0 0"
+        rpy="1.5708 0 0" />
+      <geometry>
+        <!-- <mesh filename="package://agv_description/meshes/WHEEL_RR.STL" /> -->
+        <cylinder radius="0.1016" length="0.105"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="imu_link"/> <!-- added -->
+
+  <link name="base_scan"/> <!-- added -->
+
+  <link name="rplidar_r">
+    <inertial> 
+      <origin
+        xyz="9.2203E-06 7.9132E-05 -0.025681"
+        rpy="0 0 0" />
+      <mass value="0.053604" />
+      <inertia
+        ixx="2.2348E-05"
+        ixy="9.4158E-08"
+        ixz="-2.1314E-08"
+        iyy="2.2179E-05"
+        iyz="-5.2609E-09"
+        izz="4.06E-05" />
+    </inertial>
+
+    <visual name="visual">
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://agv_description/meshes/RPLidar_FL.STL" />
+      </geometry>
+      <material name="lidar_color"/>
+    </visual>
+
+    <collision name="collision">
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://agv_description/meshes/RPLidar_FL.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="rplidar_l">
+    <inertial>
+      <origin xyz="-9.2203E-06 -7.9132E-05 -0.025681" rpy="0 0 0" />
+      <mass value="0.053604" />
+      <inertia
+        ixx="2.2348E-05"
+        ixy="9.4158E-08"
+        ixz="2.1314E-08"
+        iyy="2.2179E-05"
+        iyz="5.2609E-09"
+        izz="4.06E-05" />
+    </inertial>
+
+    <visual name="visual">
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://agv_description/meshes/RPLidar_RR.STL" />
+      </geometry>
+      <material name="lidar_color"/>
+    </visual>
+
+    <collision name="collision">
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://agv_description/meshes/RPLidar_RR.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- [JOINT] -->
+  <joint name="JOINT_BASE" type="fixed">
+    <origin 
+      xyz="0.0 0.0 0.0"
+      rpy="0.0 0.0 0.0" />
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
+
+  <joint name="JOINT_WH_FL" type="continuous">
+    <origin
+      xyz="0.282 0.2797 0.10363"
+      rpy="0 -0.030032 0" />
+    <parent link="base_link" />
+    <child link="front_left_wheel" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="JOINT_WH_FR" type="continuous">
+    <origin
+      xyz="0.282 -0.2799 0.10363"
+      rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="front_right_wheel" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="JOINT_WH_RL" type="continuous">
+    <origin
+      xyz="-0.282 0.2797 0.10363"
+      rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="back_left_wheel" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="JOINT_WH_RR" type="continuous">
+    <origin
+      xyz="-0.282 -0.2799 0.10363"
+      rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="back_right_wheel" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="JOINT_BASE_IMU" type="fixed">
+    <origin 
+      xyz="0.0 0.0 0.0"
+      rpy="0.0 0.0 0.0" />
+    <parent link="base_link"/> <!-- connected to 'base_link' -->
+    <child link="imu_link"/>
+  </joint>
+
+  <joint name="JOINT_BASE_SCAN" type="fixed">
+    <origin
+      xyz="0.0 0.0 0.28046"
+      rpy="0.0 0.0 0.0" />
+    <parent link="base_link" /> <!-- connected to 'base_link' -->
+    <child link="base_scan" />
+  </joint>
+
+  <joint name="JOINT_RPLidar_FL" type="fixed"> 
+    <origin
+      xyz="0.95 0.9 0.0"
+      rpy="0 0 1.570796" /> <!-- Orientation fixed -->
+    <parent link="base_scan" /> <!-- connected to 'base_scan' -->
+    <child link="rplidar_l" /> 
+    <!-- 'fixed' joint: 'axis' attribute not necessary -->
+  </joint>
+
+  <joint name="JOINT_RPLidar_RR" type="fixed"> 
+    <origin
+      xyz="-0.95 -0.9 0.0"
+      rpy="0 0 -1.570796" />
+    <parent link="base_scan" /> <!-- connected to 'base_scan' -->
+    <child link="rplidar_r" /> 
+    <!-- 'fixed' joint: 'axis' attribute not necessary -->
+  </joint>
+
+  <!-- [SIMULATION PLUGINS] -->
+  <gazebo>
+    <plugin name="test" filename="libgazebo_ros_planar_move.so">
+        <commandTopic>cmd_vel</commandTopic>
+        <odometryTopic>odom</odometryTopic>
+        <odometryFrame>odom</odometryFrame>
+        <odometryRate>50.0</odometryRate>
+        <robotBaseFrame>base_footprint</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="front_left_wheel">
+      <mu1>0.1</mu1>
+      <!-- <mu2>0.1</mu2> -->
+      <fdir1>1 1 0</fdir1>
+      <!-- fdir2? -->
+  </gazebo>
+
+  <gazebo reference="front_right_wheel">
+      <mu1>0.1</mu1>
+      <!-- <mu2>0.1</mu2> -->
+      <fdir1>1 1 0</fdir1>
+  </gazebo>
+
+  <gazebo refernece="back_left_wheel">
+      <mu1>0.1</mu1>
+      <!-- <mu2>0.1</mu2> -->
+      <fdir1>1 1 0</fdir1>
+  </gazebo>
+
+  <gazebo reference="back_right_wheel">
+      <mu1>0.1</mu1>
+      <!-- <mu2>0.1</mu2> -->
+      <fdir1>1 1 0</fdir1>
+  </gazebo>
+
+  <gazebo reference="imu_link">
+      <sensor type="imu" name="imu">
+          <always_on>true</always_on>
+          <visualize>false</visualize>
+          <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+              <alwaysOn>true</alwaysOn>
+              <topicName>imu</topicName>
+              <bodyName>imu_link</bodyName>
+              <frameName>imu_link</frameName>
+              <!-- <serviceName>imu_service</serviceName> -->
+              <updateRateHZ>50.0</updateRateHZ>
+              <gaussianNoise>0.0</gaussianNoise>
+              <imu>
+                  <noise>
+                      <type>gaussian</type>
+                      <rate>
+                          <mean>0.0</mean>
+                          <stddev>2e-4</stddev>
+                          <bias_mean>0.0000075</bias_mean>
+                          <bias_stddev>0.0000008</bias_stddev>
+                      </rate>
+                      <accel>
+                          <mean>0.0</mean>
+                          <stddev>1.7e-2</stddev>
+                          <bias_mean>0.1</bias_mean>
+                          <bias_stddev>0.001</bias_stddev>
+                      </accel>
+                  </noise>
+              </imu>
+          </plugin>
+      </sensor>
+      <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo reference="rplidar_l">
+      <sensor type="ray" name="rplidar_l">
+          <pose>0 0 0 0 0 0</pose>
+          <visualize>true</visualize>
+          <update_rate>10</update_rate>
+          <ray>
+              <scan>
+                  <horizontal>
+                      <samples>360</samples>
+                      <resolution>1.916666667</resolution>
+                      <min_angle>1.5707</min_angle>
+                      <max_angle>6.2830</max_angle>
+                  </horizontal>
+              </scan>
+              <range>
+                  <min>0.1</min>
+                  <max>40.0</max>
+                  <resolution>0.03</resolution>
+              </range>
+              <noise>
+                  <type>gaussian</type>
+                  <mean>0.0</mean>
+                  <stddev>0.01</stddev>
+              </noise>
+          </ray>
+          <plugin name="rplidar_l" filename="libgazebo_ros_laser.so">
+              <topicName>/scan_1</topicName>
+              <frameName>rplidar_l</frameName>
+          </plugin>
+      </sensor>
+  </gazebo>
+
+  <gazebo reference="rplidar_r">
+      <sensor type="ray" name="rplidar_r">
+          <pose>0 0 0 0 0 0</pose>
+          <visualize>true</visualize>
+          <update_rate>10</update_rate>
+          <ray>
+              <scan>
+                  <horizontal>
+                      <samples>360</samples>
+                      <resolution>1.916666667</resolution>
+                      <min_angle>1.5707</min_angle>
+                      <max_angle>6.2830</max_angle>
+                  </horizontal>
+              </scan>
+              <range>
+                  <min>0.1</min>
+                  <max>40.0</max>
+                  <resolution>0.03</resolution>
+              </range>
+              <noise>
+                  <type>gaussian</type>
+                  <mean>0.0</mean>
+                  <stddev>0.01</stddev>
+              </noise>
+          </ray>
+          <plugin name="rplidar_r" filename="libgazebo_ros_laser.so">
+              <topicName>/scan_2</topicName>
+              <frameName>rplidar_r</frameName>
+          </plugin>
+      </sensor>
+  </gazebo>
+</robot>

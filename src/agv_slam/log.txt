@@ -1,0 +1,179 @@
+... logging to /home/recipelab/.ros/log/dd0c951c-4b76-11ec-8509-5c5f67b87bad/roslaunch-pallete-6740.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/recipelab/catkin_ws/src/agv_slam/launch/slam.launch
+[1mstarted roslaunch server http://192.168.2.52:33053/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /agv_core/baud: 115200
+ * /agv_core/port: /dev/ttyACM1
+ * /agv_core/tf_prefix: 
+ * /aliencontrol_tcp_ui/cmd: sh -c '/home/kaju...
+ * /chatterbox_local/pkg_name: chatterbox_local
+ * /chatterbox_local/tcp_port: 10200
+ * /chatterbox_remote/pkg_name: chatterbox_remote
+ * /chatterbox_remote/tcp_port: 10100
+ * /l_pitch: 0.0
+ * /l_roll: 0.0
+ * /l_x: 0.365
+ * /l_y: 0.32
+ * /l_yaw: 3.141592
+ * /l_z: 0.29
+ * /laserscan_multi_merger/angle_max: 3.14159265359
+ * /laserscan_multi_merger/angle_min: -3.14159265359
+ * /laserscan_multi_merger/cloud_destination_topic: /merged_cloud
+ * /laserscan_multi_merger/destination_frame: base_link
+ * /laserscan_multi_merger/laserscan_topics: /scan_1 /scan_2
+ * /laserscan_multi_merger/scan_destination_topic: /merged_scan
+ * /mecanum/GEAR_RATIO: 51.0
+ * /mecanum/MDT: 183
+ * /mecanum/MDUI: 184
+ * /mecanum/MOTOR_CALIBRATION: 1.0
+ * /mecanum/MOTOR_TICK: 4096.0
+ * /mecanum/M_PER_ENCODER: 4.10138e-06
+ * /mecanum/PC: 172
+ * /mecanum/RMID: 183
+ * /mecanum/WHEEL_LENGTH: 0.45
+ * /mecanum/WHEEL_MAX_RPM: 50.0
+ * /mecanum/WHEEL_NUM: 4
+ * /mecanum/WHEEL_RADIUS: 0.1524
+ * /mecanum/WHEEL_WIDTH: 0.495
+ * /mecanum/baudrate: 115200
+ * /mecanum/communication: can
+ * /mecanum/main_hz: 1000
+ * /mecanum/serial_port: /dev/recipe.drive...
+ * /mecanum/slowdown: 300
+ * /mecanum/slowstart: 300
+ * /mecanum/timeout_sec: 0.3
+ * /mecanum/whisper_en: 1
+ * /r_pitch: 0.0
+ * /r_roll: 0.0
+ * /r_x: -0.365
+ * /r_y: -0.32
+ * /r_yaw: 0
+ * /r_z: 0.29
+ * /recipelab/AGV_MODEL: 0
+ * /rosdistro: melodic
+ * /rosversion: 1.14.12
+ * /rplidarNode_l/angle_compensate: True
+ * /rplidarNode_l/frame_id: rplidar_l
+ * /rplidarNode_l/inverted: False
+ * /rplidarNode_l/serial_baudrate: 256000
+ * /rplidarNode_l/serial_port: /dev/recipe.drive...
+ * /rplidarNode_r/angle_compensate: True
+ * /rplidarNode_r/frame_id: rplidar_r
+ * /rplidarNode_r/inverted: False
+ * /rplidarNode_r/serial_baudrate: 256000
+ * /rplidarNode_r/serial_port: /dev/recipe.drive...
+ * /turtlebot3_core/baud: 115200
+ * /turtlebot3_core/port: /dev/ttyACM0
+ * /turtlebot3_core/tf_prefix: 
+
+NODES
+  /
+    agv_core (rosserial_python/serial_node.py)
+    aliencontrol_tcp_ui (aliencontrol/aliencontrol)
+    broadcasterIMU (tf/static_transform_publisher)
+    cartographer_node (cartographer_ros/cartographer_node)
+    cartographer_occupancy_grid_node (cartographer_ros/cartographer_occupancy_grid_node)
+    chatterbox_local (chatterbox/chatterbox)
+    chatterbox_remote (chatterbox/chatterbox)
+    flat_world_imu_node (turtlebot3_slam/flat_world_imu_node)
+    laser_scan_modifier (set_time_laserscan/run.py)
+    laserscan_multi_merger (ira_laser_tools/laserscan_multi_merger)
+    lidar_br_to_base (tf/static_transform_publisher)
+    lidar_fl_to_base (tf/static_transform_publisher)
+    mecanum (mecanum/mecanum)
+    recipelab (recipelab/recipelab)
+    rplidarNode_l (rplidar_ros/rplidarNode)
+    rplidarNode_r (rplidar_ros/rplidarNode)
+    rviz (rviz/rviz)
+    turtlebot3_core (rosserial_python/serial_node.py)
+
+auto-starting new master
+[1mprocess[master]: started with pid [6750][0m
+[1mROS_MASTER_URI=http://192.168.2.52:11311[0m
+]2;/home/recipelab/catkin_ws/src/agv_slam/launch/slam.launch http://192.168.2.52:11311
+[1msetting /run_id to dd0c951c-4b76-11ec-8509-5c5f67b87bad[0m
+[1mprocess[rosout-1]: started with pid [6761][0m
+started core service [/rosout]
+[1mprocess[laserscan_multi_merger-2]: started with pid [6768][0m
+[1mprocess[agv_core-3]: started with pid [6769][0m
+[1mprocess[turtlebot3_core-4]: started with pid [6770][0m
+[1mprocess[rplidarNode_r-5]: started with pid [6777][0m
+[1mprocess[rplidarNode_l-6]: started with pid [6778][0m
+[1mprocess[lidar_fl_to_base-7]: started with pid [6783][0m
+[1mprocess[lidar_brAGV_MODEL(LUNCHBOX)
+[INFO] [1637573444.682539]: ROS Serial Python Node
+[INFO] [1637573444.689978]: Connecting to /dev/ttyACM0 at 115200 baud
+[INFO] [1637573446.794701]: Requesting topics...
+[INFO] [1637573452.517394]: Send tx stop request
+[0m[ INFO] [1637573444.396254005]: I1122 18:30:44.000000  6832 configuration_file_resolver.cc:41] Found '/home/recipelab/catkin_ws/src/agv_slam/config/agv.lua' for 'agv.lua'.[0m
+[0m[ INFO] [1637573444.428091716]: I1122 18:30:44.000000  6832 configuration_file_resolver.cc:41] Found '/opt/ros/melodic/share/cartographer/configuration_files/map_builder.lua' for 'map_builder.lua'.[0m
+[0m[ INFO] [1637573444.428154815]: I1122 18:30:44.000000  6832 configuration_file_resolver.cc:41] Found '/opt/ros/melodic/share/cartographer/configuration_files/map_builder.lua' for 'map_builder.lua'.[0m
+[0m[ INFO] [1637573444.428248367]: I1122 18:30:44.000000  6832 configuration_file_resolver.cc:41] Found '/opt/ros/melodic/share/cartographer/configuration_files/pose_graph.lua' for 'pose_graph.lua'.[0m
+[0m[ INFO] [1637573444.428303625]: I1122 18:30:44.000000  6832 configuration_file_resolver.cc:41] Found '/opt/ros/melodic/share/cartographer/configuration_files/pose_graph.lua' for 'pose_graph.lua'.[0m
+[0m[ INFO] [1637573444.428538557]: I1122 18:30:44.000000  6832 configuration_file_resolver.cc:41] Found '/opt/ros/melodic/share/cartographer/configuration_files/trajectory_builder.lua' for 'trajectory_builder.lua'.[0m
+[0m[ INFO] [1637573444.428585389]: I1122 18:30:44.000000  6832 configuration_file_resolver.cc:41] Found '/opt/ros/melodic/share/cartographer/configuration_files/trajectory_builder.lua' for 'trajectory_builder.lua'.[0m
+[0m[ INFO] [1637573444.428678824]: I1122 18:30:44.000000  6832 configuration_file_resolver.cc:41] Found '/opt/ros/melodic/share/cartographer/configuration_files/trajectory_builder_2d.lua' for 'trajectory_builder_2d.lua'.[0m
+[0m[ INFO] [1637573444.428720634]: I1122 18:30:44.000000  6832 configuration_file_resolver.cc:41] Found '/opt/ros/melodic/share/cartographer/configuration_files/trajectory_builder_2d.lua' for 'trajectory_builder_2d.lua'.[0m
+[0m[ INFO] [1637573444.428906352]: I1122 18:30:44.000000  6832 configuration_file_resolver.cc:41] Found '/opt/ros/melodic/share/cartographer/configuration_files/trajectory_builder_3d.lua' for 'trajectory_builder_3d.lua'.[0m
+[0m[ INFO] [1637573444.428952630]: I1122 18:30:44.000000  6832 configuration_file_resolver.cc:41] Found '/opt/ros/melodic/share/cartographer/configuration_files/trajectory_builder_3d.lua' for 'trajectory_builder_3d.lua'.[0m
+[0m[ INFO] [1637573444.485412473]: I1122 18:30:44.000000  6832 submap_2d.cc:187] Added submap 1[0m
+[0m[ INFO] [1637573444.485598334]: I1122 18:30:44.000000  6832 map_builder_bridge.cc:130] Added trajectory with ID '0'.[0m
+[KOptimizing: Done.     
+[KOptimizing: Done.     
+[0m[ INFO] [1637573444.083579147]: RPLIDAR running on ROS package rplidar_ros. SDK Version:1.12.0[0m
+RPLIDAR S/N: 9065EE87C8E49AD7C7E692F36FB54D62
+[0m[ INFO] [1637573444.590391366]: Firmware Ver: 1.29[0m
+[0m[ INFO] [1637573444.590433034]: Hardware Rev: 18[0m
+[0m[ INFO] [1637573444.591336756]: RPLidar health status : 0[0m
+[0m[ INFO] [1637573444.628387698]: current scan mode: DenseBoost, max_distance: 40.0 m, Point number: 9.3K , angle_compensate: 2[0m
+[0m[ INFO] [1637573444.106959810]: RPLIDAR running on ROS package rplidar_ros. SDK Version:1.12.0[0m
+RPLIDAR S/N: 9D26EE8BC7EB98D1B7E593F51DFA4E6E
+[0m[ INFO] [1637573444.617306210]: Firmware Ver: 1.29[0m
+[0m[ INFO] [1637573444.617351907]: Hardware Rev: 18[0m
+[0m[ INFO] [1637573444.618256791]: RPLidar health status : 0[0m
+[0m[ INFO] [1637573444.655069099]: current scan mode: DenseBoost, max_distance: 40.0 m, Point number: 9.3K , angle_compensate: 2[0m
+[0m[ INFO] [1637573444.023985531]: Waiting for topics ...[0m
+[0m[ INFO] [1637573445.026073202]: Waiting for topics ...[0m
+[0m[ INFO] [1637573446.028113124]: Subscribing to topics	2[0m
+/scan_1 /scan_2 _to_base-8]: started with pid [6785][0m
+[1mprocess[mecanum-9]: started with pid [6796][0m
+[1mprocess[broadcasterIMU-10]: started with pid [6798][0m
+[1mprocess[chatterbox_local-11]: started with pid [6813][0m
+[1mprocess[aliencontrol_tcp_ui-12]: started with pid [6815][0m
+[1mprocess[chatterbox_remote-13]: started with pid [6822][0m
+[1mprocess[recipelab-14]: started with pid [6824][0m
+[1mprocess[cartographer_node-15]: started with pid [6832][0m
+[1mprocess[cartographer_occupancy_grid_node-16]: started with pid [6840][0m
+[1mprocess[flat_world_imu_node-17]: started with pid [6842][0m
+[1mprocess[rviz-18]: started with pid [6847][0m
+[1mprocess[laser_scan_modifier-19]: started with pid [6856][0m
+[rviz-18] killing on exit
+[laser_scan_modifier-19] killing on exit
+[recipelab-14] killing on exit
+[cartographer_node-15] killing on exit
+[cartographer_occupancy_grid_node-16] killing on exit
+[flat_world_imu_node-17] killing on exit
+[aliencontrol_tcp_ui-12] killing on exit
+[chatterbox_remote-13] killing on exit
+[chatterbox_local-11] killing on exit
+[broadcasterIMU-10] killing on exit
+[mecanum-9] killing on exit
+[lidar_br_to_base-8] killing on exit
+[lidar_fl_to_base-7] killing on exit
+[rplidarNode_l-6] killing on exit
+[rplidarNode_r-5] killing on exit
+[turtlebot3_core-4] killing on exit
+[agv_core-3] killing on exit
+[laserscan_multi_merger-2] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

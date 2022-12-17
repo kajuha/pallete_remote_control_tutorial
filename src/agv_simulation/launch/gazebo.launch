@@ -1,0 +1,36 @@
+<launch>
+    <arg name="x_pos" default="0.0"/>
+    <arg name="y_pos" default="0.0"/>
+    <arg name="z_pos" default="0.0"/>
+    <arg name="world" default="$(find agv_simulation)/worlds/office_env_large.world"/>
+    <arg name="urdf" default="pallete_rev1.urdf"/>
+    <arg name="gui" default="true"/>
+    <arg name="message_display" default="screen"/>
+
+    <param name="robot_description" textfile="$(find agv_description)/urdf/$(arg urdf)"/>
+    <param name="use_sim_time" value="true"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/> -->
+        <!-- <arg name="world_name" value="/usr/share/gazebo-11/worlds/cafe.world"/> -->
+        <!-- <arg name="world_name" value="$(find agv_simulation)/worlds/office_env_large.world"/> -->
+        <arg name="world_name" value="$(arg world)"/>
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+        <arg name="output" value="$(arg message_display)"/>
+    </include>
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -file $(find agv_description)/urdf/$(arg urdf) -model agv -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos)" output="$(arg message_display)"/>
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="$(arg message_display)">
+        <param name="publish_frequency" value="50"/>
+    </node>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="$(arg message_display)">
+        <param name="rate" value="50"/>
+    </node>
+
+</launch>

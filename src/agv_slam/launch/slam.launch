@@ -1,0 +1,25 @@
+<launch>
+    <!-- Arguments -->
+    <arg name="slam_method"     default="cartographer" doc="slam type [gmapping, cartographer, hector_slam]"/>
+
+    <!-- to be changed -->
+    <arg name="configuration_basename" default="agv.lua"/>
+
+    <arg name="open_rviz"       default="true"/>
+    <arg name="rviz_directory"  default="$(find agv_slam)/rviz/" />
+    <arg name="rviz_config"     default="$(arg slam_method).rviz" />
+    
+    <!-- SLAM -->
+    <remap from="/mecanum/odom" to="/odom"/>
+
+    <include file="$(find agv_slam)/launch/$(arg slam_method).launch">
+        <arg name="configuration_basename" value="$(arg configuration_basename)"/>
+    </include>
+
+    <!-- rviz -->
+    <group if="$(arg open_rviz)">
+        <node pkg="rviz" type="rviz" name="rviz" required="true"
+            args="-d $(arg rviz_directory)/$(arg rviz_config)"/>
+    </group>
+    
+</launch>

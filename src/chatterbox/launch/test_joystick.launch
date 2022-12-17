@@ -1,0 +1,9 @@
+<launch>
+	<include file="$(find chatterbox)/launch/base_joystick.launch">
+    	<arg name="message_display" value="screen"/>
+	</include>
+
+	<include file="$(find chatterbox)/launch/client_joystick.launch">
+    	<arg name="message_display" value="screen"/>
+	</include>
+</launch>

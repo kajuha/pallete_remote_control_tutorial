@@ -1,0 +1,6 @@
+src/tcp_server
+.vscode
+test
+src/web/venv
+src/web/templates/position_graph.csv
+src/labview/tcp_ui/tcp_ui.lvlps

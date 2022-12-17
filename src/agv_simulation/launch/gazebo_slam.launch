@@ -1,0 +1,46 @@
+<launch>
+    <arg name="slam_method"             default="cartographer"/>
+    <arg name="configuration_basename"  default="agv.lua"/>
+    <arg name="bag_directory"           default="$(find agv_simulation)/bags"/>
+    <arg name="bag_filename"            default="test.bag"/>
+    <arg name="world"                   default="$(find agv_simulation)/worlds/simple_world.world"/>
+    <arg name="urdf"                    default="pallete_rev1.urdf"/>
+    <arg name="x_pos"                   default="0.0"/>
+    <arg name="y_pos"                   default="0.0"/>
+    <arg name="z_pos"                   default="0.0"/>
+
+    <param name="use_sim_time" value="true"/>
+    
+    <!-- Gazebo Simulation -->
+    <include file="$(find agv_simulation)/launch/gazebo.launch">
+        <arg name="world"   value="$(arg world)"/>
+        <arg name="x_pos"   value="$(arg x_pos)"/>
+        <arg name="y_pos"   value="$(arg y_pos)"/>
+        <arg name="z_pos"   value="$(arg z_pos)"/>
+        <arg name="urdf"    value="$(arg urdf)"/>
+    </include>
+
+    <!-- SLAM -->
+    <include file="$(find agv_slam)/launch/slam.launch">
+        <arg name="configuration_basename" value="$(arg configuration_basename)"/>
+        <arg name="gazebo_disable"         value="false"/>
+    </include>
+    
+    <!-- multi lidar -->
+    <!-- <node pkg="ira_laser_tools" type="laserscan_multi_merger" name="laserscan_multi_merger" output="screen">
+        <param name="destination_frame"         value="base_scan"/>
+        <param name="cloud_destination_topic"   value="/merged_cloud"/>
+        <param name="scan_destination_topic"    value="/merged_scan"/>
+        <param name="laserscan_topics"          value="/scan_1 /scan_2"/>
+        <param name="angle_min"                 value="-3.14159265359"/>
+        <param name="angle_max"                 value="3.14159265359"/>
+    </node>
+
+    <node pkg="set_time_laserscan" type="run.py" name="laser_scan_modifier" output="screen"/> -->
+
+    <!-- Rviz -->
+    <!-- <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find agv_slam)/rviz/cartographer.rviz"/> -->
+
+    <!-- Ros bag record -->
+    <node pkg="rosbag" type="record" name="record_bag" args="-a -O $(arg bag_directory)/$(arg bag_filename)"/>
+</launch>

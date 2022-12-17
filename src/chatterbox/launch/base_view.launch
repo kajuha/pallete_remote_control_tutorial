@@ -1,0 +1,10 @@
+<launch>
+    <arg name="tcp_port" default="10300" doc="tcp port"/>
+    <arg name="node_name" default="chatterbox_view" doc="node name"/>
+    <arg name="message_display" default="screen" doc="output type"/>
+    
+    <node pkg="chatterbox" type="chatterbox" name="$(arg node_name)" output="$(arg message_display)">
+        <param name="pkg_name" value="$(arg node_name)" />
+        <param name="tcp_port" value="$(arg tcp_port)"/>
+    </node>
+</launch>

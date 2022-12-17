@@ -1,0 +1,145 @@
+#!/usr/bin/env python
+
+# Reference : https://github.com/pirobot/ros-by-example/blob/master/rbx_vol_1/rbx1_nav/nodes/move_base_square.py
+
+import rospy
+import actionlib
+from actionlib_msgs.msg import *
+from geometry_msgs.msg import Pose, Point, Quaternion, Twist
+from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+from tf.transformations import quaternion_from_euler
+from visualization_msgs.msg import Marker
+from math import radians, degrees, pi, sin, cos
+
+class MoveBaseNode():
+    def __init__(self):
+        rospy.init_node('MoveBaseTestNode', anonymous=False)
+        rospy.on_shutdown(self.shutdown)
+        
+        self.waypts = []      # target coordinates
+        self.quaternions = []  # target quaternions
+        self.euler_angles = [] # target Orientation        
+        self.markers = Marker()
+        self.init_markers()
+        
+        self.move_base = actionlib.SimpleActionClient('move_base', MoveBaseAction)
+        
+        rospy.loginfo('Waiting for move_base_action server ...')
+        self.move_base.wait_for_server(rospy.Duration(60))
+        
+        rospy.loginfo("Connected to move base server")
+        
+    def set_waypts(self, coords, orientations=[]):
+        self.euler_angles = orientations
+        self.__get_quaternion_list(coords, orientations)
+        
+        for i, pt in enumerate(coords):
+            self.waypts.append(Pose(Point(pt[0], pt[1], 0.0), self.quaternions[i]))
+            self.markers.points.append(self.waypts[i].position)
+                
+    def __get_quaternion_list(self, coords, orientations):
+        if len(coords) == 0:
+            return
+        else:
+            if len(orientations) != len(coords):
+                self.quaternions = [0.0 for _ in range(len(coords))]
+            for euler_angle in orientations:
+                q_angle = quaternion_from_euler(0, 0, euler_angle, axes='sxyz')
+                q = Quaternion(*q_angle)
+                self.quaterions.append(q)
+    
+    def move(self, goal, cnt):
+        self.move_base.send_goal(goal)
+        
+        result = self.move_base.wait_for_result(rospy.Duration(300))
+        
+        if not result:
+            if cnt == len(self.waypts):
+                return
+            else:
+                rospy.loginfo('Timed out: failed to achieve goal')
+                self.shutdown()
+        else:
+            state = self.move_base.get_state()
+            if state == GoalStatus.SUCCEEDED:
+                rospy.loginfo("Goal succeeded!")
+                
+    def execute_route(self):
+        cnt = 0
+        for waypt in self.waypts:
+            cnt += 1
+            self.marker_pub.publish(self.markers)
+            goal = MoveBaseGoal()
+            
+            goal.target_pose.header.frame_id = 'map'
+            goal.target_pose.header.stamp = rospy.Time.now()
+            # goal.target_pose.pose = waypt
+            
+            goal.target_pose.pose.position.x = waypt.position.x
+            goal.target_pose.pose.position.y = waypt.position.y
+            goal.target_pose.pose.position.z = 0.0
+            
+            # goal.target_pose.pose.orientation.w = waypt.orientation
+            goal.target_pose.pose.orientation.w = 1.0
+            self.move(goal, cnt)
+        
+        
+    
+    def init_markers(self):
+        marker_scale = 0.2
+        marker_lifetime = 0 # 0: forever
+        marker_ns = 'waypoints'
+        marker_id = 0
+        marker_color = {'r': 1.0,
+                        'g': 0.7,
+                        'b': 1.0,
+                        'a': 1.0
+                        }
+        
+        self.marker_pub = rospy.Publisher('waypoint_markers', Marker)
+
+        self.Markers = Marker()
+        self.markers.ns = marker_ns
+        self.markers.id = marker_id
+        self.markers.type = Marker.SPHERE_LIST
+        self.markers.action = Marker.ADD
+        self.markers.lifetime = rospy.Duration(marker_lifetime)
+        self.markers.scale.x = marker_scale
+        self.markers.scale.y = marker_scale
+        self.markers.color.r = marker_color['r']
+        self.markers.color.g = marker_color['g']
+        self.markers.color.b = marker_color['b']
+        self.markers.color.a = marker_color['a']
+        
+        self.markers.header.frame_id = 'map'
+        self.markers.header.stamp = rospy.Time.now()
+        self.markers.points = list()
+        
+    def shutdown(self):
+        rospy.loginfo('Stopping the robot')
+        self.move_base.cancel_goal()
+        rospy.sleep(2)
+        
+        
+waypoints = [[15.0,   0.0],
+             [15.0,  -8.0],
+             [ 8.0,  -8.0],
+             [15.0,  -8.0],
+             [15.0, -15.0],
+             [ 0.0, -15.0],
+             [ 0.0,   0.0]
+             ]
+
+orientations = []
+        
+if __name__ == '__main__':
+    try:
+        test_node = MoveBaseNode()
+        test_node.set_waypts(waypoints, orientations)
+        test_node.execute_route()
+        
+    except rospy.ROSInterruptException:
+        rospy.loginfo("Navigation test finished.")
+    
+        
+            

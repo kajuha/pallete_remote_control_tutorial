@@ -1,0 +1,14 @@
+<launch>
+    <arg name="slam_method"             default="cartographer"/>
+    <arg name="configuration_basename"  default="agv.lua"/>
+    <arg name="open_rviz"               default="false"/>
+    <arg name="rviz_config"             default="$(find agv_slam)/rviz/$(arg slam_method).rviz"/>
+
+    <include file="$(find recipelab)/launch/sim_pallete.launch">
+        <arg name="rviz_config" value="$(arg rviz_config)"/>
+    </include>
+
+    <include file="$(find agv_slam)/launch/$(arg slam_method).launch">
+        <arg name="configuration_basename" value="$(arg configuration_basename)"/>
+    </include>
+</launch>

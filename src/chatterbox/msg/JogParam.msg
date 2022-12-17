@@ -1,0 +1,2 @@
+JogInfo jogInfo
+VelParams velParams

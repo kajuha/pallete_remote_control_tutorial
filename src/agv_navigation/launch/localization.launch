@@ -1,0 +1,12 @@
+<launch>
+    <arg name="odom_type" default="onmi"/>
+    <arg name="mapfile" default="$(find agv_slam)/maps/testbed.yaml"/>
+
+    <!-- Map server -->
+    <node pkg="map_server" type="map_server" name="map_server" args="$(arg mapfile)"/>
+    
+    <!-- AMCL -->
+    <include file="$(find agv_navigation)/launch/amcl.launch">
+        <arg name="odom_model_type" value="omni"/>
+    </iclude>
+</launch>

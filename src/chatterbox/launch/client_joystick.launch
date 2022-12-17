@@ -1,0 +1,6 @@
+<launch>
+    <arg name="node_name" default="client_joystick" doc="node name"/>
+    <arg name="message_display" default="screen" doc="output type"/>
+    
+    <node pkg="chatterbox" type="client_joystick" name="$(arg node_name)" output="$(arg message_display)"/>
+</launch>

@@ -1,0 +1,12 @@
+<launch>
+    <arg name="tcp_port" default="10400" doc="tcp port"/>
+    <arg name="node_name" default="chatterbox_view_mecanum" doc="node name"/>
+    <arg name="message_display" default="screen" doc="output type"/>
+    <!-- <remap from="/chatterbox/whisperOut_topic" to="/mecanum/whisperOut_topic" />--><!-- 여기서 가능 pub:/chatterbox/whisperOut_topic를 /mecanum/whisperOut_topic로 리맵-->
+    
+    <node pkg="chatterbox" type="chatterbox" name="$(arg node_name)" output="$(arg message_display)">
+        <remap from="/chatterbox/whisperOut_topic" to="/mecanum/whisperOut_topic" /><!-- 여기서 가능 pub:/chatterbox/whisperOut_topic를 /mecanum/whisperOut_topic로 리맵-->
+        <param name="pkg_name" value="$(arg node_name)" />
+        <param name="tcp_port" value="$(arg tcp_port)"/>
+    </node>
+</launch>

@@ -1,0 +1,59 @@
+<launch>
+    <arg name="world" default="$(find agv_simulation)/worlds/test_field.world"/>
+    <arg name="mapfile" default="$(find agv_simulation)/maps/testfield.yaml"/>
+    <arg name="urdf" default="pallete_rev1.urdf"/>
+    <arg name="x_pos" default="0.0"/>
+    <arg name="y_pos" default="0.0"/>
+    <arg name="z_pos" default="0.0"/>
+    <arg name="gui" default="false"/>
+    <arg name="rviz_config" default="$(find recipelab)/rviz/sim_pallete.rviz"/>
+
+    <param name="use_sim_time" value="true"/>
+
+    <include file="$(find agv_simulation)/launch/gazebo.launch">
+        <arg name="world" value="$(arg world)"/>
+        <arg name="x_pos" value="$(arg x_pos)"/>
+        <arg name="y_pos" value="$(arg y_pos)"/>
+        <arg name="z_pos" value="$(arg z_pos)"/>
+        <arg name="urdf" value="$(arg urdf)"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="message_display" value="log"/>
+    </include>
+
+    <node pkg="map_server" type="map_server" name="map_server" args="$(arg mapfile)" output="log"/>
+
+    <include file="$(find agv_navigation)/launch/amcl.launch">
+        <arg name="message_display" value="log"/>
+    </include>
+
+    <node pkg="ira_laser_tools" type="laserscan_multi_merger" name="laserscan_multi_merger" output="log">
+        <param name="destination_frame" value="base_scan"/>
+        <param name="cloud_destination_topic" value="/merged_cloud"/>
+        <param name="scan_destination_topic" value="/merged_scan"/>
+        <param name="laserscan_topics" value="/scan_1 /scan_2"/>
+        <param name="angle_min" value="-3.14159265359"/>
+        <param name="angle_max" value="3.14159265359"/>
+    </node>
+
+    <node pkg="set_time_laserscan" type="run.py" name="laser_scan_modifier" output="log"/>
+
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(arg rviz_config)"/>
+
+	<include file="$(find chatterbox)/launch/base_web.launch">
+    	<arg name="message_display" value="log"/>
+	</include>
+
+	<include file="$(find battery)/launch/base_dummy.launch">
+    	<arg name="message_display" value="log"/>
+	</include>
+
+	<include file="$(find chatterbox)/launch/server_web.launch">
+    	<arg name="message_display" value="log"/>
+        <arg name="user_name" value="$(env USER)"/>
+    </include> 
+
+    <include file="$(find recipelab)/launch/base_pallete.launch">
+        <arg name="en_gazebo" value="1"/>
+        <arg name="message_display" value="log"/>
+    </include>
+</launch>

@@ -1,0 +1,16 @@
+<launch>
+    <arg name="AGV_MODEL" doc="AGV_MODEL"/>
+    <arg name="message_display" default="screen" doc="output type"/>
+    <arg name="en_lidar_check" default="1" doc="en_lidar_check"/>
+    <arg name="en_virtual_wall" default="1" doc="en_virtual_wall"/>
+    <arg name="en_gazebo" default="0" doc="en_gazebo"/>
+    <arg name="remap_cmd_vel" default="/mecanum/md_vel_topic" doc="remap_cmd_vel"/>
+
+	<node pkg="recipelab" type="recipelab" name="recipelab" output="$(arg message_display)">
+        <param name="AGV_MODEL" value="$(arg AGV_MODEL)"/>
+        <param name="en_lidar_check" value="$(arg en_lidar_check)"/>
+        <param name="en_virtual_wall" value="$(arg en_virtual_wall)"/>
+        <param name="en_gazebo" value="$(arg en_gazebo)"/>
+        <param name="remap_cmd_vel" value="$(arg remap_cmd_vel)"/>
+	</node>
+</launch>

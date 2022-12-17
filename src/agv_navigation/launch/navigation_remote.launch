@@ -1,0 +1,54 @@
+<launch>
+    <!-- Arguments -->
+    <!-- <arg name="configuration_basename" default="agv.lua"/> -->
+
+    <!-- <arg name="map_directory" default="$(find agv_slam)/maps"/> -->
+    <!-- <arg name="map_file" default="map.yaml"/> -->
+
+    <arg name="open_rviz" default="true"/>
+
+    <arg name="move_forward_only" default="false"/>
+    <!-- <arg name="slam_activate" default="false"/> -->
+    
+    <!-- Map server -->
+    <!-- <node pkg="map_server" name="map_server" type="map_server" -->
+          <!-- args="$(arg map_directory)/$(arg map_file)"/> -->
+  
+    <!-- AMCL -->
+    <include file="$(find agv_navigation)/launch/amcl.launch"/>
+  
+    <!-- move_base -->
+    <include file="$(find agv_navigation)/launch/move_base.launch">
+      <!-- <param name="base_local_planner" value="eband_local_planner/EBandPlannerROS"/> -->
+      <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+      <param name="neutral_cost" value="66"/>
+      <param name="cost_factor" value="0.55"/>
+    </include>
+  
+    <!-- rviz -->
+    <group if="$(arg open_rviz)"> 
+      <node pkg="rviz" type="rviz" name="rviz" required="true"
+            args="-d $(find agv_navigation)/rviz/agv.rviz"/>
+    </group>
+
+    <!-- SLAM -->
+    <!-- <group if="$(arg slam_activate)">
+      <include file="$(find agv_slam)/launch/cartographer.launch">
+        <arg name="configuration_basename" value="$(arg configuration_basename)"/>
+      </include>
+    </group> -->
+
+    <!-- ira laser tools -->
+    <!-- <node pkg="ira_laser_tools" type="laserscan_multi_merger" name="laserscan_multi_merger" output="screen">
+        <param name="destination_frame" value="base_link"/>
+        <param name="cloud_destination_topic" value="/merged_cloud"/>
+        <param name="scan_destination_topic" value="/merged_scan"/>
+        <param name="laserscan_topics" value="/scan_1 /scan_2"/>
+        <param name="angle_min" value="-3.14159265359"/>
+        <param name="angle_max" value="3.14159265359"/>
+    </node>   -->
+
+    <!-- laser scan modifier -->
+    <!-- <node pkg="set_time_laserscan" type="run.py" name="laser_scan_modifier" output="screen"/> -->
+  </launch>
+  

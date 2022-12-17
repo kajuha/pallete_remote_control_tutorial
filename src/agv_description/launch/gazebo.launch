@@ -1,0 +1,19 @@
+<launch>
+    <arg name="x_pos" default="-1.8"/>
+    <arg name="y_pos" default="0.0"/>
+    <arg name="z_pos" default="0.0"/>
+    <arg name="gui" default="true"/>
+    <param name="use_sim_time" value="true"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/>
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -file $(find agv_description)/urdf/agv_gazebo.urdf -model agv_gazebo -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos)"/>
+    <!-- <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -file $(find agv_description)/urdf/pallete_rev1.urdf -model agv_gazebo -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos)"/> -->
+</launch>

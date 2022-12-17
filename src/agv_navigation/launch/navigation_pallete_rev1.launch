@@ -1,0 +1,16 @@
+<launch>
+    <arg name="local_planner"   default="teb"/>
+    <arg name="mapfile"         default="$(find agv_slam)/maps/testbed_3.yaml"/>
+    <arg name="open_rviz"       default="true"/>
+    <arg name="odom_type"       default="diff"/> <!-- diff/omni -->
+
+
+    <!-- Map server -->
+    <node pkg="map_server" type="map_server" name="map_server" args="$(arg mapfile)"/>
+    
+    <!-- Path planner -->
+    <include file="$(find agv_navigation)/launch/navigation_$(arg local_planner).launch">
+        <arg name="open_rviz" value="$(arg open_rviz)"/>
+        <arg name="odom_type" value="$(arg odom_type)"/>
+    </include>
+</launch>

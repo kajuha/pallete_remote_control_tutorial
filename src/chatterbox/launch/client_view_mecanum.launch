@@ -1,0 +1,7 @@
+<launch>
+    <arg name="user_name" default="$(env USER)" doc="user name"/>
+    
+    <node pkg="aliencontrol" type="aliencontrol" name="aliencontrol_tcp_view_mecanum">
+        <param name="cmd" value="sh -c '/home/$(arg user_name)/catkin_ws/src/chatterbox/builds/view_exec/tcp_view.exe 127.0.0.1 10400;'"/>
+    </node>
+</launch>

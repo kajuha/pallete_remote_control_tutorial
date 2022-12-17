@@ -1,0 +1,58 @@
+<launch>
+    <arg name="slam_method" default="cartographer"/>
+    <arg name="configuration_basename" default="agv_localization.lua"/>
+    <arg name="resolution" default="0.05"/>
+    <param name="use_sim_time" value="true"/>
+
+    <param name="robot_description" textfile="$(find agv_description)/urdf/agv_gazebo.urdf"/>
+    <!-- <node pkg="agv" type="dummy_odometry" name="dummy_odometry"/> -->
+
+    <!-- <include file="$(find agv_navigation)/launch/amcl.launch"/> -->
+    
+    <include file="$(find agv_description)/launch/gazebo.launch"/>
+    <include file="$(find agv_navigation)/launch/move_base.launch"/>
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="publish_frequency" value="50"/>
+    </node>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+        <param name="rate" value="50"/>
+    </node>
+
+    <!-- <include file="$(find agv_slam)/launch/$(arg slam_method).launch">
+        <arg name="configuration_basename" value="$(arg configuration_basename)"/>
+    </include> -->
+    <node pkg="cartographer_ros" type="cartographer_node" name="cartographer_node"
+          args="-configuration_directory $(find agv_slam)/config
+                -configuration_basename $(arg configuration_basename)
+                -load_state_filename $(find agv_description)/maps/map.yaml"
+          output="screen">
+        <remap from="/imu" to="/flat_imu"/>
+        <!-- remap form="points2" to="/camera/depth/points"-->
+    </node>
+
+    <!-- cartographer_occupancy_grid_node -->
+    <node pkg="cartographer_ros" type="cartographer_occupancy_grid_node"
+          name="cartographer_occupancy_grid_node"
+          args="-resolution $(arg resolution)"/>
+
+    <!-- flat_world_imu_node -->
+    <node pkg="turtlebot3_slam" type="flat_world_imu_node" name="flat_world_imu_node" output="screen">
+        <remap from="imu_in" to="/imu"/>
+        <remap from="imu_out" to="/flat_imu"/>
+    </node>
+    <!-- multi lidar -->
+    <node pkg="ira_laser_tools" type="laserscan_multi_merger" name="laserscan_multi_merger" output="screen">
+        <param name="destination_frame" value="base_scan"/>
+        <param name="cloud_destination_topic" value="/merged_cloud"/>
+        <param name="scan_destination_topic" value="/merged_scan"/>
+        <param name="laserscan_topics" value="/scan_1 /scan_2"/>
+        <param name="angle_min" value="-3.14159265359"/>
+        <param name="angle_max" value="3.14159265359"/>
+    </node>
+
+    <node pkg="set_time_laserscan" type="run.py" name="laser_scan_modifier" output="screen"/>
+
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find agv_slam)/rviz/cartographer.rviz"/>
+</launch>

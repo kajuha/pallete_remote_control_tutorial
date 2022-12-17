@@ -1,0 +1,9 @@
+[link] - name changed
+base_footprint < added >
+base_link 
+base_scan < added >
+imu_link  < added > 
+rplidar_l < joint, pose changed >
+rplidar_r < joint, pose changed >
+
+

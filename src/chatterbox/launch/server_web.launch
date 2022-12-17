@@ -1,0 +1,13 @@
+<launch>
+    <!-- <arg name="user_name" default="$(env USER)" doc="user name"/> -->
+    <arg name="user_name" default="recipelab" doc="user name"/>
+    <!-- <arg name="base_path" default="$(env HOME)/catkin_ws/src/chatterbox/src/web" doc="base path"/> -->
+    <arg name="base_path" default="/home/$(arg user_name)/catkin_ws/src/chatterbox/src/web" doc="base path"/>
+    <arg name="message_display" default="screen" doc="output type"/>
+    
+    <node pkg="aliencontrol" type="aliencontrol" name="aliencontrol_web_ui" output="$(arg message_display)">
+        <!-- <param name="cmd" value="bash -c 'source $(arg base_path)/venv/bin/activate && python $(arg base_path)/app.py'"/> -->
+        <!-- <param name="cmd" value="bash -c 'source $(arg base_path)/venv/bin/activate &amp;&amp; python $(arg base_path)/app.py'"/> -->
+        <param name="cmd" value="$(arg base_path)/run.sh $(arg base_path)"/>
+    </node>
+</launch>

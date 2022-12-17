@@ -1,0 +1,45 @@
+<launch>
+    <arg name="local_planner"   default="teb"/>
+    <!-- <arg name="bag_record"      default="false"/> -->
+    <!-- <arg name="bag_file"        default="$(find agv_simulation)/bags/demo.bag"/> -->
+    <!-- <arg name="mapfile"         default="$(find agv_slam)/maps/simple_world.yaml"/> -->
+    <arg name="mapfile"         default="$(find agv_slam)/maps/testbed_3.yaml"/>
+    <!-- <arg name="control"         default="_web"/> -->
+    <!-- <arg name="gazebo_disable"  default="true"/> -->
+    <arg name="open_rviz"       default="true"/>
+    <arg name="odom_type"       default="diff"/> <!-- diff/omni -->
+
+
+    <!-- Map server -->
+    <node pkg="map_server" type="map_server" name="map_server" args="$(arg mapfile)"/>
+    
+    <!-- Recipelab -->
+    <!-- <group if="$(arg gazebo_disable)">
+        <include file="$(find agv)/launch/agv.launch">
+            <arg name="control" value="$(arg control)"/>
+        </include>
+    </group> -->
+
+    <!-- Path planner -->
+    <include file="$(find agv_navigation)/launch/navigation_$(arg local_planner).launch">
+        <arg name="open_rviz" value="$(arg open_rviz)"/>
+        <arg name="odom_type" value="$(arg odom_type)"/>
+    </include>
+
+    <!-- LiDAR -->
+    <!-- <node pkg="ira_laser_tools" type="laserscan_multi_merger" name="laserscan_multi_merger">
+        <param name="destination_frame"         value="base_scan"/>
+        <param name="cloud_destination_topic"   value="/merged_cloud"/>
+        <param name="scan_destination_topic"    value="/merged_scan"/>
+        <param name="laserscan_topics"          value="/scan_1 /scan_2"/>
+        <param name="angle_min"                 value="-3.14159265359"/>
+        <param name="angle_max"                 value="3.14159265259"/>
+    </node>
+
+    <node pkg="set_time_laserscan" type="run.py" name="laser_scan_modifier" output="screen"/> -->
+
+    <!-- ROS bag record -->
+    <!-- <group if="$(arg bag_record)">
+        <node pkg="rosbag" type="record" name="bag_record" args="-O $(arg bag_file) scan_1 scan_2 scan amcl_pose odom imu"/>
+    </group> -->
+</launch>

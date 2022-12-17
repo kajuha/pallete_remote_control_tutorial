@@ -1,0 +1,15 @@
+<launch>
+  <arg name="message_display" default="screen" doc="output type"/>
+  <arg name="serial_port" default="/dev/recipe.driver.battery"  doc="serial_port"/>
+  <arg name="baud_rate" default="19200"  doc="baud_rate"/>
+  <arg name="slave_num" default="10"  doc="slave_num"/>
+  <arg name="bms_model" default="powercraft"  doc="bms_model"/>
+
+  <include file="$(find battery)/launch/base.launch">
+    <arg name="message_display" value="$(arg message_display)"/>
+    <arg name="serial_port" value="$(arg serial_port)"/>
+    <arg name="baud_rate" value="$(arg baud_rate)"/>
+    <arg name="slave_num" value="$(arg slave_num)"/>
+    <arg name="bms_model" value="$(arg bms_model)"/>
+  </include>
+</launch>
